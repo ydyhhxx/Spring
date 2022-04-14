@@ -1,5 +1,6 @@
-package com.lyw.spring;
+package com.lyw.spring.applicationContext;
 
+import com.lyw.spring.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.beans.Introspector;
@@ -9,16 +10,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ApplicationContext {
+public class AnnotationConfigApplicationContext extends GenericApplicationContext {
 
     private Class configClass;
 
     // 存放 beanDefinition
-    private ConcurrentHashMap<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap(64);
+    private final ConcurrentHashMap<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>(64);
     // 单例池
-    private ConcurrentHashMap<String, Object> singletonObjects = new ConcurrentHashMap(64);
+    private final ConcurrentHashMap<String, Object> singletonObjects = new ConcurrentHashMap<>(64);
 
-    public ApplicationContext(Class configClass) {
+    public AnnotationConfigApplicationContext(Class configClass) {
         this.configClass = configClass;
 
         // 是否配置了包扫描路径
@@ -117,6 +118,7 @@ public class ApplicationContext {
         return null;
     }
 
+    @Override
     public Object getBean(String beanName) {
         BeanDefinition beanDefinition = beanDefinitionMap.get(beanName);
         if (beanDefinition == null)
@@ -133,6 +135,7 @@ public class ApplicationContext {
         return obj;
     }
 
+    @Override
     public Object getBean(Class clazz) {
         return null;
     }

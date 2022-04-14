@@ -2,7 +2,7 @@ package com.lyw.controller;
 
 import com.lyw.spring.Component;
 
-@Component
+@Component("a")
 public class A {
 
 }
